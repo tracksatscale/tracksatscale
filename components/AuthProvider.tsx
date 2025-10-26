@@ -35,12 +35,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
         email_confirmed_at: new Date().toISOString(),
-        phone_confirmed_at: null,
+        phone_confirmed_at: undefined,
         last_sign_in_at: new Date().toISOString(),
         role: 'authenticated',
         factors: [],
         identities: []
-      } as User)
+      } as any)
       setLoading(false)
       return
     }
@@ -67,7 +67,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
+      async (event: any, session: any) => {
         setUser(session?.user ?? null)
         setLoading(false)
       }

@@ -21,7 +21,7 @@ export async function generateStaticParams() {
       .select('slug')
       .eq('status', 'published')
 
-    return articles?.map((article) => ({
+    return articles?.map((article: any) => ({
       slug: article.slug,
     })) || []
   } catch (error) {
@@ -212,7 +212,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                     {/* Tags */}
                     {article.tags && article.tags.length > 0 && (
                       <div className="flex flex-wrap gap-2 mb-6">
-                        {article.tags.map((tag) => (
+                        {article.tags.map((tag: string) => (
                           <span
                             key={tag}
                             className="inline-flex items-center rounded-full bg-blue-50 px-3 py-1 text-sm font-medium text-blue-700 dark:bg-blue-900/20 dark:text-blue-300"

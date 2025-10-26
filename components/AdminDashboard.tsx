@@ -27,7 +27,7 @@ export function AdminDashboard() {
   useEffect(() => {
     // Test Supabase connection
     console.log('Testing Supabase connection...')
-    supabase.from('articles').select('count').then(({ data, error }) => {
+    supabase.from('articles').select('count').then(({ data, error }: any) => {
       if (error) {
         console.error('❌ Supabase connection failed:', error)
       } else {
@@ -41,7 +41,7 @@ export function AdminDashboard() {
   const fetchArticles = async () => {
     try {
       console.log('Fetching articles...')
-      const { data, error } = await supabase
+      const { data, error }: any = await supabase
         .from('articles')
         .select('*')
         .order('created_at', { ascending: false })
@@ -56,8 +56,8 @@ export function AdminDashboard() {
       setArticles(data || [])
 
       // Calculate stats
-      const published = data?.filter(article => article.status === 'published').length || 0
-      const drafts = data?.filter(article => article.status === 'draft').length || 0
+      const published = data?.filter((article: any) => article.status === 'published').length || 0
+      const drafts = data?.filter((article: any) => article.status === 'draft').length || 0
 
       setStats({
         total: data?.length || 0,
@@ -82,7 +82,7 @@ export function AdminDashboard() {
 
       if (error) throw error
 
-      setArticles(articles.filter(article => article.id !== id))
+      setArticles(articles.filter((article: any) => article.id !== id))
       setStats(prev => ({ ...prev, total: prev.total - 1 }))
     } catch (error) {
       console.error('Error deleting article:', error)
@@ -220,7 +220,7 @@ export function AdminDashboard() {
                     This Month
                   </dt>
                   <dd className="text-lg font-medium text-slate-900 dark:text-slate-100">
-                    {articles.filter(article => {
+                    {articles.filter((article: any) => {
                       const articleDate = new Date(article.created_at)
                       const now = new Date()
                       return articleDate.getMonth() === now.getMonth() && 

@@ -9,9 +9,9 @@ import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 
 interface EditArticlePageProps {
-  params: {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
 export default function EditArticlePage({ params }: EditArticlePageProps) {
