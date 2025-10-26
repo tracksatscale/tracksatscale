@@ -1,0 +1,146 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer components {
+  .prose {
+    @apply text-slate-700 dark:text-slate-300;
+  }
+  
+  .prose h1,
+  .prose h2,
+  .prose h3,
+  .prose h4,
+  .prose h5,
+  .prose h6 {
+    @apply text-slate-900 dark:text-slate-100 font-bold;
+  }
+  
+  .prose h1 {
+    @apply text-3xl sm:text-4xl lg:text-5xl;
+  }
+  
+  .prose h2 {
+    @apply text-2xl sm:text-3xl;
+  }
+  
+  .prose h3 {
+    @apply text-xl sm:text-2xl;
+  }
+  
+  .prose p {
+    @apply leading-relaxed;
+  }
+  
+  .prose a {
+    @apply text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors;
+  }
+  
+  .prose code {
+    @apply bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 px-2 py-1 rounded text-sm;
+  }
+  
+  .prose pre {
+    @apply bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 p-4 rounded-lg overflow-x-auto;
+  }
+  
+  .prose blockquote {
+    @apply border-l-4 border-slate-300 dark:border-slate-600 pl-4 italic;
+  }
+  
+  .prose ul,
+  .prose ol {
+    @apply space-y-2;
+  }
+  
+  .prose li {
+    @apply leading-relaxed;
+  }
+  
+  .prose img {
+    @apply rounded-lg shadow-sm;
+  }
+  
+  .prose table {
+    @apply w-full border-collapse;
+  }
+  
+  .prose th,
+  .prose td {
+    @apply border border-slate-300 dark:border-slate-600 px-4 py-2 text-left;
+  }
+  
+  .prose th {
+    @apply bg-slate-50 dark:bg-slate-800 font-semibold;
+  }
+}
+
+@layer utilities {
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.5s ease-out;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
