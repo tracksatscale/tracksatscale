@@ -126,6 +126,368 @@ body {
   .prose hr {
     @apply border-slate-200 dark:border-slate-700 my-8;
   }
+  
+  /* Article Content Styling */
+  .article-content {
+    @apply text-slate-700 dark:text-slate-300 leading-relaxed;
+  }
+  
+  .article-content * {
+    @apply max-w-full;
+  }
+  
+  /* Override embedded HTML styles */
+  .article-content body {
+    @apply bg-transparent p-0 m-0;
+  }
+  
+  .article-content .sidebar {
+    @apply hidden;
+  }
+  
+  .article-content .container {
+    @apply max-w-none mx-0 p-0;
+  }
+  
+  .article-content header {
+    @apply mb-8;
+  }
+  
+  .article-content h1 {
+    @apply text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-slate-900 dark:text-slate-100 leading-tight;
+  }
+  
+  .article-content h2 {
+    @apply text-2xl sm:text-3xl font-bold mb-6 mt-8 text-slate-900 dark:text-slate-100 border-b border-slate-200 dark:border-slate-700 pb-2;
+  }
+  
+  .article-content h3 {
+    @apply text-xl sm:text-2xl font-semibold mb-4 mt-6 text-slate-900 dark:text-slate-100;
+  }
+  
+  .article-content h4 {
+    @apply text-lg sm:text-xl font-semibold mb-3 mt-4 text-slate-900 dark:text-slate-100;
+  }
+  
+  .article-content p {
+    @apply mb-4 leading-relaxed text-slate-700 dark:text-slate-300;
+  }
+  
+  .article-content a {
+    @apply text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 underline decoration-1 underline-offset-2 transition-colors;
+  }
+  
+  .article-content strong {
+    @apply font-semibold text-slate-900 dark:text-slate-100;
+  }
+  
+  .article-content em {
+    @apply italic;
+  }
+  
+  .article-content ul,
+  .article-content ol {
+    @apply mb-4 ml-6;
+  }
+  
+  .article-content li {
+    @apply mb-2 leading-relaxed;
+  }
+  
+  .article-content img {
+    @apply rounded-lg shadow-md my-6 w-full h-auto;
+  }
+  
+  .article-content .article-image {
+    @apply rounded-lg shadow-md my-6 w-full h-auto;
+  }
+  
+  .article-content .image-caption {
+    @apply text-center text-sm text-slate-500 dark:text-slate-400 mt-2 mb-6 italic;
+  }
+  
+  .article-content table {
+    @apply w-full border-collapse my-6 bg-white dark:bg-slate-800 rounded-lg overflow-hidden shadow-sm;
+  }
+  
+  .article-content th {
+    @apply bg-slate-50 dark:bg-slate-700 font-semibold text-slate-900 dark:text-slate-100 px-4 py-3 text-left border-b border-slate-200 dark:border-slate-600;
+  }
+  
+  .article-content td {
+    @apply px-4 py-3 border-b border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300;
+  }
+  
+  .article-content tr:hover {
+    @apply bg-slate-50 dark:bg-slate-700/50;
+  }
+  
+  .article-content blockquote {
+    @apply border-l-4 border-blue-500 pl-4 italic my-6 text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 py-4 rounded-r-lg;
+  }
+  
+  .article-content .quote-box {
+    @apply border-l-4 border-blue-500 pl-6 pr-4 py-4 my-6 bg-slate-50 dark:bg-slate-800/50 rounded-r-lg italic;
+  }
+  
+  .article-content .quote-box cite {
+    @apply block mt-3 not-italic font-semibold text-slate-500 dark:text-slate-400;
+  }
+  
+  .article-content .info-box {
+    @apply p-4 rounded-lg my-6 border-l-4;
+  }
+  
+  .article-content .info-box.warning {
+    @apply bg-yellow-50 dark:bg-yellow-900/20 border-yellow-500;
+  }
+  
+  .article-content .info-box.success {
+    @apply bg-green-50 dark:bg-green-900/20 border-green-500;
+  }
+  
+  .article-content .info-box.danger {
+    @apply bg-red-50 dark:bg-red-900/20 border-red-500;
+  }
+  
+  .article-content .info-box.info {
+    @apply bg-blue-50 dark:bg-blue-900/20 border-blue-500;
+  }
+  
+  .article-content .info-box h4 {
+    @apply font-semibold mb-2 text-slate-900 dark:text-slate-100;
+  }
+  
+  .article-content .key-takeaway {
+    @apply bg-gradient-to-r from-blue-600 to-purple-600 text-white p-6 rounded-lg my-8 shadow-lg;
+  }
+  
+  .article-content .key-takeaway h3 {
+    @apply text-white text-xl font-bold mb-3;
+  }
+  
+  .article-content .key-takeaway p {
+    @apply text-white/90 leading-relaxed;
+  }
+  
+  .article-content .pros-cons-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 gap-6 my-8;
+  }
+  
+  .article-content .pros-box,
+  .article-content .cons-box {
+    @apply p-6 rounded-lg;
+  }
+  
+  .article-content .pros-box {
+    @apply bg-green-50 dark:bg-green-900/20;
+  }
+  
+  .article-content .cons-box {
+    @apply bg-red-50 dark:bg-red-900/20;
+  }
+  
+  .article-content .pros-box h3,
+  .article-content .cons-box h3 {
+    @apply font-bold mb-4 flex items-center gap-2;
+  }
+  
+  .article-content .pros-box ul,
+  .article-content .cons-box ul {
+    @apply list-none ml-0;
+  }
+  
+  .article-content .pros-box li,
+  .article-content .cons-box li {
+    @apply mb-3 pl-6 relative;
+  }
+  
+  .article-content .pros-box li::before {
+    content: "✓";
+    @apply absolute left-0 text-green-600 font-bold;
+  }
+  
+  .article-content .cons-box li::before {
+    content: "✗";
+    @apply absolute left-0 text-red-600 font-bold;
+  }
+  
+  .article-content .pricing-table {
+    @apply grid grid-cols-1 md:grid-cols-3 gap-6 my-8;
+  }
+  
+  .article-content .pricing-card {
+    @apply bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-lg p-6 text-center shadow-sm hover:shadow-md transition-shadow;
+  }
+  
+  .article-content .pricing-card.popular {
+    @apply border-blue-500 border-2 relative;
+  }
+  
+  .article-content .pricing-card.popular::before {
+    content: "POPULAR";
+    @apply absolute -top-3 left-1/2 transform -translate-x-1/2 bg-blue-500 text-white px-4 py-1 rounded-full text-xs font-bold;
+  }
+  
+  .article-content .pricing-card h4 {
+    @apply text-xl font-bold mb-4 text-slate-900 dark:text-slate-100;
+  }
+  
+  .article-content .price {
+    @apply text-3xl font-bold text-blue-600 mb-2;
+  }
+  
+  .article-content .price-period {
+    @apply text-sm text-slate-500 dark:text-slate-400;
+  }
+  
+  .article-content .features-list {
+    @apply list-none text-left my-6;
+  }
+  
+  .article-content .features-list li {
+    @apply py-2 border-b border-slate-200 dark:border-slate-700 text-sm;
+  }
+  
+  .article-content .features-list li::before {
+    content: "✓";
+    @apply text-green-600 font-bold mr-2;
+  }
+  
+  .article-content .comparison-table {
+    @apply w-full border-collapse my-8 bg-white dark:bg-slate-800 rounded-lg overflow-hidden shadow-sm;
+  }
+  
+  .article-content .comparison-table th {
+    @apply bg-blue-600 text-white px-4 py-3 text-left font-semibold;
+  }
+  
+  .article-content .comparison-table td {
+    @apply px-4 py-3 border-b border-slate-200 dark:border-slate-700;
+  }
+  
+  .article-content .test-result {
+    @apply bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-lg p-6 my-6;
+  }
+  
+  .article-content .test-result h4 {
+    @apply text-blue-600 font-semibold mb-4;
+  }
+  
+  .article-content .result-bar {
+    @apply bg-slate-100 dark:bg-slate-700 h-10 rounded-lg relative my-4 overflow-hidden;
+  }
+  
+  .article-content .result-bar-fill {
+    @apply h-full flex items-center px-4 text-white font-bold;
+  }
+  
+  .article-content .result-bar-fill.ai {
+    @apply bg-red-500;
+  }
+  
+  .article-content .result-bar-fill.human {
+    @apply bg-green-500;
+  }
+  
+  .article-content .result-label {
+    @apply flex justify-between text-sm text-slate-500 dark:text-slate-400 mt-2;
+  }
+  
+  .article-content .video-container {
+    @apply relative w-full h-0 pb-[56.25%] my-8 rounded-lg overflow-hidden shadow-lg;
+  }
+  
+  .article-content .video-container iframe {
+    @apply absolute top-0 left-0 w-full h-full border-0;
+  }
+  
+  .article-content .cta-button {
+    @apply inline-block bg-blue-600 text-white px-8 py-4 rounded-full font-bold text-lg no-underline transition-all hover:bg-blue-700 hover:-translate-y-1 shadow-lg hover:shadow-xl;
+  }
+  
+  .article-content .stats-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 my-8;
+  }
+  
+  .article-content .stat-card {
+    @apply bg-gradient-to-r from-blue-600 to-purple-600 text-white p-6 rounded-lg text-center;
+  }
+  
+  .article-content .stat-number {
+    @apply text-3xl font-bold mb-2;
+  }
+  
+  .article-content .stat-label {
+    @apply text-sm opacity-90;
+  }
+  
+  .article-content .faq-item {
+    @apply bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-6 my-4;
+  }
+  
+  .article-content .faq-question {
+    @apply text-lg font-semibold mb-3 text-slate-900 dark:text-slate-100;
+  }
+  
+  .article-content .faq-answer {
+    @apply text-slate-600 dark:text-slate-400 leading-relaxed;
+  }
+  
+  .article-content .meta-info {
+    @apply flex flex-wrap items-center gap-4 mt-6 p-4 bg-slate-50 dark:bg-slate-800 rounded-lg;
+  }
+  
+  .article-content .author-info {
+    @apply flex items-center gap-3;
+  }
+  
+  .article-content .author-avatar {
+    @apply w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-lg;
+  }
+  
+  .article-content .author-details h4 {
+    @apply text-base font-semibold mb-1 text-slate-900 dark:text-slate-100;
+  }
+  
+  .article-content .author-details p {
+    @apply text-sm text-slate-500 dark:text-slate-400 mb-0;
+  }
+  
+  .article-content .rating-box {
+    @apply flex items-center gap-3 p-3 bg-white dark:bg-slate-700 rounded-lg border border-slate-200 dark:border-slate-600;
+  }
+  
+  .article-content .rating-score {
+    @apply text-2xl font-bold text-yellow-500;
+  }
+  
+  .article-content .stars {
+    @apply text-yellow-500 text-lg;
+  }
+  
+  .article-content .scroll-top {
+    @apply hidden;
+  }
+  
+  /* Mobile responsive adjustments */
+  @media (max-width: 768px) {
+    .article-content .pros-cons-grid {
+      @apply grid-cols-1;
+    }
+    
+    .article-content .pricing-table {
+      @apply grid-cols-1;
+    }
+    
+    .article-content .stats-grid {
+      @apply grid-cols-2;
+    }
+    
+    .article-content .meta-info {
+      @apply flex-col items-start;
+    }
+  }
 }
 
 @layer utilities {

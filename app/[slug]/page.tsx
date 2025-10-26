@@ -261,34 +261,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                   )}
                 </header>
 
-                <div className="prose prose-lg max-w-none dark:prose-invert 
-                  prose-headings:text-slate-900 dark:prose-headings:text-slate-100 
-                  prose-p:text-slate-700 dark:prose-p:text-slate-300 
-                  prose-a:text-blue-600 dark:prose-a:text-blue-400 
-                  prose-strong:text-slate-900 dark:prose-strong:text-slate-100 
-                  prose-code:text-slate-900 dark:prose-code:text-slate-100 
-                  prose-pre:bg-slate-100 dark:prose-pre:bg-slate-800 
-                  prose-blockquote:border-slate-300 dark:prose-blockquote:border-slate-600 
-                  prose-blockquote:text-slate-700 dark:prose-blockquote:text-slate-300 
-                  prose-img:rounded-lg prose-img:shadow-md 
-                  [&_h1]:text-slate-900 dark:[&_h1]:text-slate-100 
-                  [&_h2]:text-slate-900 dark:[&_h2]:text-slate-100 
-                  [&_h3]:text-slate-900 dark:[&_h3]:text-slate-100 
-                  [&_h4]:text-slate-900 dark:[&_h4]:text-slate-100 
-                  [&_h5]:text-slate-900 dark:[&_h5]:text-slate-100 
-                  [&_h6]:text-slate-900 dark:[&_h6]:text-slate-100
-                  [&_h2]:border-b [&_h2]:border-slate-200 [&_h2]:pb-2 [&_h2]:mb-4
-                  dark:[&_h2]:border-slate-700
-                  [&_h3]:mt-8 [&_h3]:mb-4
-                  [&_p]:mb-4 [&_p]:leading-relaxed
-                  [&_ul]:mb-4 [&_ol]:mb-4
-                  [&_li]:mb-2
-                  [&_blockquote]:my-6 [&_blockquote]:pl-4 [&_blockquote]:border-l-4
-                  [&_table]:my-6 [&_table]:w-full [&_table]:border-collapse
-                  [&_th]:bg-slate-50 [&_th]:dark:bg-slate-800 [&_th]:font-semibold
-                  [&_td]:border [&_td]:border-slate-200 [&_td]:dark:border-slate-700
-                  [&_pre]:my-6 [&_pre]:overflow-x-auto
-                  [&_code]:bg-slate-100 [&_code]:dark:bg-slate-800 [&_code]:px-2 [&_code]:py-1 [&_code]:rounded">
+                <div className="article-content">
                   <div dangerouslySetInnerHTML={{ __html: article.content }} />
                 </div>
               </div>
