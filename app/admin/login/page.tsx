@@ -25,13 +25,22 @@ export default function AdminLogin() {
       const adminEmail = process.env.NEXT_PUBLIC_ADMIN_EMAIL
       const adminPassword = process.env.NEXT_PUBLIC_ADMIN_PASSWORD
       
+      // Debug logging
+      console.log('Debug Login Info:')
+      console.log('Entered email:', email)
+      console.log('Entered password:', password)
+      console.log('Admin email from env:', adminEmail)
+      console.log('Admin password from env:', adminPassword ? 'Set' : 'Not Set')
+      console.log('Email match:', email === adminEmail)
+      console.log('Password match:', password === adminPassword)
+      
       if (!adminEmail || !adminPassword) {
         setError('Admin credentials not configured. Please contact the administrator.')
         return
       }
       
       if (email !== adminEmail || password !== adminPassword) {
-        setError('Invalid admin credentials.')
+        setError(`Invalid admin credentials. Expected: ${adminEmail}, Got: ${email}`)
         return
       }
       
