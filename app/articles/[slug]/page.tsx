@@ -4,9 +4,9 @@ import { supabase } from '@/lib/supabase'
 import { Calendar, Clock, User } from 'lucide-react'
 
 interface ArticlePageProps {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
 export async function generateStaticParams() {
