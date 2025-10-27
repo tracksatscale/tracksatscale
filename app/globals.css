@@ -147,8 +147,9 @@ body {
   }
   
   .article-content .container {
-    @apply max-w-4xl mx-auto p-0 ml-72;
+    @apply w-full p-0 ml-72 mr-8;
     min-height: calc(100vh - 8rem);
+    max-width: calc(100vw - 20rem);
   }
   
   /* Ensure proper centering for article content */
@@ -512,7 +513,8 @@ body {
     }
     
     .article-content .container {
-      @apply ml-60;
+      @apply ml-60 mr-4;
+      max-width: calc(100vw - 16rem);
     }
   }
   
