@@ -143,11 +143,22 @@ body {
   
   /* Hide sidebar elements in article content */
   .article-content .sidebar {
-    @apply hidden;
+    @apply hidden !important;
   }
   
   .article-content .container {
-    @apply w-full p-0 m-0;
+    @apply w-full p-0 m-0 !important;
+  }
+  
+  /* Override any fixed positioning in article content */
+  .article-content * {
+    position: static !important;
+  }
+  
+  .article-content .sidebar,
+  .article-content .toc,
+  .article-content .table-of-contents {
+    @apply hidden !important;
   }
   
   .article-content .sidebar h3 {
@@ -513,12 +524,24 @@ body {
       @apply w-full px-0 mx-0;
     }
     
-    .article-content .sidebar {
-      @apply hidden;
+    .article-content .sidebar,
+    .article-content .toc,
+    .article-content .table-of-contents {
+      @apply hidden !important;
+      display: none !important;
     }
     
     .article-content .container {
-      @apply ml-0 max-w-full mx-0 p-0;
+      @apply ml-0 max-w-full mx-0 p-0 !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+    
+    /* Force all content to be visible and properly positioned */
+    .article-content > * {
+      @apply block w-full !important;
+      position: static !important;
+      float: none !important;
     }
     
     .article-content .pros-cons-grid {
