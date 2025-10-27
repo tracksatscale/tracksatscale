@@ -141,6 +141,31 @@ body {
     @apply bg-transparent p-0 m-0;
   }
   
+  /* Override any embedded layout styles that might interfere */
+  .article-content * {
+    box-sizing: border-box;
+  }
+  
+  /* Reset any embedded CSS that might interfere with our layout */
+  .article-content {
+    position: relative !important;
+    width: 100% !important;
+    max-width: none !important;
+  }
+  
+  /* Ensure proper stacking order */
+  .article-content .sidebar,
+  .article-content .toc,
+  .article-content .table-of-contents {
+    z-index: 40;
+  }
+  
+  .article-content .container,
+  .article-content main,
+  .article-content .main-content {
+    z-index: 10;
+  }
+  
   /* Article content styling - desktop first */
   .article-content .sidebar {
     @apply fixed left-0 top-20 w-64 h-[calc(100vh-5rem)] bg-slate-50 dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 p-6 overflow-y-auto z-40;
@@ -523,10 +548,23 @@ body {
       @apply w-full px-4 mx-0;
     }
     
+    /* Hide all sidebar elements on mobile */
     .article-content .sidebar,
     .article-content .toc,
-    .article-content .table-of-contents {
+    .article-content .table-of-contents,
+    .article-content nav[class*="sidebar"],
+    .article-content div[class*="sidebar"],
+    .article-content aside,
+    .article-content .toc-container,
+    .article-content .table-of-contents-container {
       display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      height: 0 !important;
+      width: 0 !important;
+      overflow: hidden !important;
+      position: absolute !important;
+      left: -9999px !important;
     }
     
     .article-content .container {
@@ -534,14 +572,29 @@ body {
       margin-right: 0 !important;
       max-width: 100% !important;
       padding: 1rem !important;
+      width: 100% !important;
     }
     
-    /* Force all content to be visible and properly positioned */
-    .article-content > * {
+    /* Force main content to be visible and properly positioned */
+    .article-content > *:not(.sidebar):not(.toc):not(.table-of-contents):not(nav):not(aside) {
       display: block !important;
       width: 100% !important;
       position: static !important;
       float: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+    
+    /* Ensure main content area is visible */
+    .article-content main,
+    .article-content .main-content,
+    .article-content .content,
+    .article-content .article-body {
+      display: block !important;
+      width: 100% !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      padding: 0 !important;
     }
     
     .article-content .pros-cons-grid {
@@ -560,7 +613,7 @@ body {
       @apply flex-col items-start;
     }
     
-    /* Ensure all content is visible on mobile */
+    /* Ensure all content elements are visible on mobile */
     .article-content h1,
     .article-content h2,
     .article-content h3,
@@ -573,8 +626,45 @@ body {
     .article-content li,
     .article-content img,
     .article-content table,
-    .article-content blockquote {
-      @apply block w-full;
+    .article-content blockquote,
+    .article-content div:not(.sidebar):not(.toc):not(.table-of-contents) {
+      display: block !important;
+      width: 100% !important;
+      position: static !important;
+      float: none !important;
+    }
+    
+    /* Override any embedded styles that might hide content */
+    .article-content * {
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+    }
+    
+    /* Specific overrides for common embedded HTML structures */
+    .article-content .wrapper,
+    .article-content .page-wrapper,
+    .article-content .content-wrapper {
+      display: block !important;
+      width: 100% !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    
+    /* Force any hidden content to be visible */
+    .article-content .hidden,
+    .article-content [style*="display: none"],
+    .article-content [style*="visibility: hidden"] {
+      display: block !important;
+      visibility: visible !important;
+    }
+    
+    /* Ensure proper text flow */
+    .article-content p,
+    .article-content div,
+    .article-content section,
+    .article-content article {
+      clear: both !important;
+      float: none !important;
     }
   }
 }
