@@ -143,6 +143,7 @@ body {
   
   .article-content .sidebar {
     @apply fixed left-0 top-20 w-64 h-[calc(100vh-5rem)] bg-slate-50 dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 p-6 overflow-y-auto z-40;
+    display: block !important;
   }
   
   .article-content .container {
@@ -504,24 +505,27 @@ body {
     @apply hidden;
   }
   
+  /* Tablet responsive adjustments */
+  @media (max-width: 1024px) and (min-width: 769px) {
+    .article-content .sidebar {
+      @apply w-56;
+    }
+    
+    .article-content .container {
+      @apply ml-60;
+    }
+  }
+  
   /* Mobile responsive adjustments */
-  @media (max-width: 1024px) {
+  @media (max-width: 768px) {
     .article-content .sidebar {
       @apply hidden;
     }
     
     .article-content .container {
-      @apply ml-0 max-w-4xl mx-auto;
+      @apply ml-0 max-w-full mx-4;
     }
-  }
-  
-  @media (max-width: 768px) {
-    .article-content .container {
-      @apply max-w-full mx-4;
-    }
-  }
-  
-  @media (max-width: 768px) {
+    
     .article-content .pros-cons-grid {
       @apply grid-cols-1;
     }
