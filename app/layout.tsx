@@ -16,6 +16,9 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "TrackScale Blog",
   description: "A beautiful blog built with Next.js and Supabase",
+  verification: {
+    google: "IH5cbk_KMXHppDi6kniuT3Q_zQdvrIVEBW_qWkyDPWw",
+  },
 };
 
 export default function RootLayout({
