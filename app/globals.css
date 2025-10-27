@@ -147,7 +147,7 @@ body {
   }
   
   .article-content .container {
-    @apply w-full p-0 ml-72 mr-8;
+    @apply w-full p-8 ml-72 mr-8;
     min-height: calc(100vh - 8rem);
     max-width: calc(100vw - 20rem);
   }
@@ -513,7 +513,7 @@ body {
     }
     
     .article-content .container {
-      @apply ml-60 mr-4;
+      @apply ml-60 mr-4 p-6;
       max-width: calc(100vw - 16rem);
     }
   }
@@ -525,7 +525,7 @@ body {
     }
     
     .article-content .container {
-      @apply ml-0 max-w-full mx-4;
+      @apply ml-0 max-w-full mx-4 p-4;
     }
     
     .article-content .pros-cons-grid {

@@ -250,56 +250,8 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         <main className="py-8">
           <div className="w-full px-4 sm:px-6 lg:px-8">
             <article className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
-              <div className="p-8 sm:p-12">
-                <header className="mb-8">
-                  <h1 
-                    className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-6 text-slate-900 dark:text-slate-100 leading-tight"
-                    dangerouslySetInnerHTML={{ __html: article.title }}
-                  />
-                  
-                  {/* Excerpt */}
-                  {article.excerpt && (
-                    <div className="mb-6">
-                      <p 
-                        className="text-lg leading-relaxed text-slate-600 dark:text-slate-400"
-                        dangerouslySetInnerHTML={{ __html: article.excerpt }}
-                      />
-                    </div>
-                  )}
-                  
-                  <div className="flex flex-wrap items-center gap-6 text-sm text-slate-500 dark:text-slate-400 mb-6">
-                    <div className="flex items-center gap-2">
-                      <Calendar className="h-4 w-4" />
-                      {formatDate(article.published_at || article.created_at)}
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Clock className="h-4 w-4" />
-                      {getReadingTime(article.content)} min read
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <User className="h-4 w-4" />
-                      TrackScale Blog
-                    </div>
-                  </div>
-
-                  {/* Tags */}
-                  {article.tags && article.tags.length > 0 && (
-                    <div className="flex flex-wrap gap-2 mb-8">
-                      {article.tags.map((tag: string) => (
-                        <span
-                          key={tag}
-                          className="inline-flex items-center rounded-full bg-blue-50 px-3 py-1 text-sm font-medium text-blue-700 dark:bg-blue-900/20 dark:text-blue-300"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                </header>
-
-                <div className="article-content">
-                  <div dangerouslySetInnerHTML={{ __html: article.content }} />
-                </div>
+              <div className="article-content">
+                <div dangerouslySetInnerHTML={{ __html: article.content }} />
               </div>
             </article>
           </div>
