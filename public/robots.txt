@@ -1,20 +1,4 @@
 User-agent: *
 Allow: /
 
-# Sitemap
-Sitemap: https://trackscale.com/sitemap.xml
-
-# Disallow admin areas
-Disallow: /admin/
-Disallow: /api/
-
-# Allow important pages
-Allow: /
-Allow: /about
-Allow: /contact
-Allow: /privacy
-Allow: /terms
-Allow: /articles/
-
-
-
+Sitemap: https://tracksatscale.vercel.app/sitemap.xml
