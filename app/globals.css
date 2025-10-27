@@ -143,11 +143,13 @@ body {
   
   /* Hide sidebar elements in article content */
   .article-content .sidebar {
-    @apply hidden !important;
+    display: none !important;
   }
   
   .article-content .container {
-    @apply w-full p-0 m-0 !important;
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
   }
   
   /* Override any fixed positioning in article content */
@@ -158,7 +160,7 @@ body {
   .article-content .sidebar,
   .article-content .toc,
   .article-content .table-of-contents {
-    @apply hidden !important;
+    display: none !important;
   }
   
   .article-content .sidebar h3 {
@@ -527,19 +529,20 @@ body {
     .article-content .sidebar,
     .article-content .toc,
     .article-content .table-of-contents {
-      @apply hidden !important;
       display: none !important;
     }
     
     .article-content .container {
-      @apply ml-0 max-w-full mx-0 p-0 !important;
       margin-left: 0 !important;
       margin-right: 0 !important;
+      max-width: 100% !important;
+      padding: 0 !important;
     }
     
     /* Force all content to be visible and properly positioned */
     .article-content > * {
-      @apply block w-full !important;
+      display: block !important;
+      width: 100% !important;
       position: static !important;
       float: none !important;
     }
