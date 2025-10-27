@@ -141,26 +141,23 @@ body {
     @apply bg-transparent p-0 m-0;
   }
   
-  /* Hide sidebar elements in article content */
+  /* Article content styling - desktop first */
   .article-content .sidebar {
-    display: none !important;
+    @apply fixed left-0 top-20 w-64 h-[calc(100vh-5rem)] bg-slate-50 dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 p-6 overflow-y-auto z-40;
+    display: block !important;
   }
   
   .article-content .container {
-    width: 100% !important;
-    padding: 0 !important;
-    margin: 0 !important;
-  }
-  
-  /* Override any fixed positioning in article content */
-  .article-content * {
-    position: static !important;
+    @apply w-full p-8 ml-72 mr-8;
+    min-height: calc(100vh - 8rem);
+    max-width: calc(100vw - 20rem);
   }
   
   .article-content .sidebar,
   .article-content .toc,
   .article-content .table-of-contents {
-    display: none !important;
+    @apply fixed left-0 top-20 w-64 h-[calc(100vh-5rem)] bg-slate-50 dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 p-6 overflow-y-auto z-40;
+    display: block !important;
   }
   
   .article-content .sidebar h3 {
