@@ -54,16 +54,31 @@ export async function generateMetadata({ params }: ArticlePageProps) {
       }
     }
 
+    // Extract title from HTML content with multiple fallbacks
+    const titleMatch = article.content.match(/<title[^>]*>(.*?)<\/title>/i)
+    const h1Match = article.content.match(/<h1[^>]*>(.*?)<\/h1>/i)
+    const h2Match = article.content.match(/<h2[^>]*>(.*?)<\/h2>/i)
+    
+    // Clean HTML tags from extracted title
+    const cleanTitle = (title: string) => title.replace(/<[^>]*>/g, '').trim()
+    
+    const extractedTitle = 
+      (titleMatch?.[1] && cleanTitle(titleMatch[1])) ||
+      (h1Match?.[1] && cleanTitle(h1Match[1])) ||
+      (h2Match?.[1] && cleanTitle(h2Match[1])) ||
+      article.title ||
+      'Untitled Article'
+    
     // Clean HTML tags from content for description
     const cleanContent = article.content.replace(/<[^>]*>/g, '').substring(0, 160)
     const description = article.excerpt || cleanContent
 
     return {
-      title: article.title,
+      title: extractedTitle,
       description: description,
       keywords: article.tags?.join(', ') || '',
       openGraph: {
-        title: article.title,
+        title: extractedTitle,
         description: description,
         type: 'article',
         publishedTime: article.published_at,
@@ -72,7 +87,7 @@ export async function generateMetadata({ params }: ArticlePageProps) {
       },
       twitter: {
         card: 'summary_large_image',
-        title: article.title,
+        title: extractedTitle,
         description: description,
       },
       alternates: {
@@ -124,11 +139,25 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
       return Math.min(readingTime, 30)
     }
 
+    // Extract title from HTML content (same logic as in generateMetadata)
+    const titleMatch = article.content.match(/<title[^>]*>(.*?)<\/title>/i)
+    const h1Match = article.content.match(/<h1[^>]*>(.*?)<\/h1>/i)
+    const h2Match = article.content.match(/<h2[^>]*>(.*?)<\/h2>/i)
+    
+    const cleanTitle = (title: string) => title.replace(/<[^>]*>/g, '').trim()
+    
+    const extractedTitle = 
+      (titleMatch?.[1] && cleanTitle(titleMatch[1])) ||
+      (h1Match?.[1] && cleanTitle(h1Match[1])) ||
+      (h2Match?.[1] && cleanTitle(h2Match[1])) ||
+      article.title ||
+      'Untitled Article'
+
     // Generate structured data for SEO
     const structuredData = {
       "@context": "https://schema.org",
       "@type": "Article",
-      "headline": article.title,
+      "headline": extractedTitle,
       "description": article.excerpt || article.content.replace(/<[^>]*>/g, '').substring(0, 160),
       "image": article.featured_image || undefined,
       "author": {
