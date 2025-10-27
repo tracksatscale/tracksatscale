@@ -129,7 +129,7 @@ body {
   
   /* Article Content Styling */
   .article-content {
-    @apply text-slate-700 dark:text-slate-300 leading-relaxed;
+    @apply text-slate-700 dark:text-slate-300 leading-relaxed w-full;
   }
   
   .article-content * {
@@ -141,24 +141,13 @@ body {
     @apply bg-transparent p-0 m-0;
   }
   
+  /* Hide sidebar elements in article content */
   .article-content .sidebar {
-    @apply fixed left-0 top-20 w-64 h-[calc(100vh-5rem)] bg-slate-50 dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 p-6 overflow-y-auto z-40;
-    display: block !important;
+    @apply hidden;
   }
   
   .article-content .container {
-    @apply w-full p-8 ml-72 mr-8;
-    min-height: calc(100vh - 8rem);
-    max-width: calc(100vw - 20rem);
-  }
-  
-  /* Ensure proper centering for article content */
-  .article-content {
-    @apply text-center;
-  }
-  
-  .article-content .container {
-    @apply text-left;
+    @apply w-full p-0 m-0;
   }
   
   .article-content .sidebar h3 {
@@ -520,12 +509,16 @@ body {
   
   /* Mobile responsive adjustments */
   @media (max-width: 768px) {
+    .article-content {
+      @apply w-full px-0 mx-0;
+    }
+    
     .article-content .sidebar {
       @apply hidden;
     }
     
     .article-content .container {
-      @apply ml-0 max-w-full mx-4 p-4;
+      @apply ml-0 max-w-full mx-0 p-0;
     }
     
     .article-content .pros-cons-grid {
@@ -542,6 +535,23 @@ body {
     
     .article-content .meta-info {
       @apply flex-col items-start;
+    }
+    
+    /* Ensure all content is visible on mobile */
+    .article-content h1,
+    .article-content h2,
+    .article-content h3,
+    .article-content h4,
+    .article-content h5,
+    .article-content h6,
+    .article-content p,
+    .article-content ul,
+    .article-content ol,
+    .article-content li,
+    .article-content img,
+    .article-content table,
+    .article-content blockquote {
+      @apply block w-full;
     }
   }
 }

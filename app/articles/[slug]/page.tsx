@@ -193,8 +193,11 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                   )}
                 </header>
 
-                <div className="prose prose-xl max-w-none dark:prose-invert prose-headings:text-slate-900 dark:prose-headings:text-slate-100 prose-p:text-slate-700 dark:prose-p:text-slate-300 prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-strong:text-slate-900 dark:prose-strong:text-slate-100 prose-code:text-slate-900 dark:prose-code:text-slate-100 prose-pre:bg-slate-100 dark:prose-pre:bg-slate-800 prose-blockquote:border-slate-300 dark:prose-blockquote:border-slate-600 prose-blockquote:text-slate-700 dark:prose-blockquote:text-slate-300 prose-img:rounded-lg prose-img:shadow-md [&_h1]:text-slate-900 dark:[&_h1]:text-slate-100 [&_h2]:text-slate-900 dark:[&_h2]:text-slate-100 [&_h3]:text-slate-900 dark:[&_h3]:text-slate-100 [&_h4]:text-slate-900 dark:[&_h4]:text-slate-100 [&_h5]:text-slate-900 dark:[&_h5]:text-slate-100 [&_h6]:text-slate-900 dark:[&_h6]:text-slate-100">
-                  <div dangerouslySetInnerHTML={{ __html: article.content }} />
+                <div className="prose prose-lg max-w-none dark:prose-invert prose-headings:text-slate-900 dark:prose-headings:text-slate-100 prose-p:text-slate-700 dark:prose-p:text-slate-300 prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-strong:text-slate-900 dark:prose-strong:text-slate-100 prose-code:text-slate-900 dark:prose-code:text-slate-100 prose-pre:bg-slate-100 dark:prose-pre:bg-slate-800 prose-blockquote:border-slate-300 dark:prose-blockquote:border-slate-600 prose-blockquote:text-slate-700 dark:prose-blockquote:text-slate-300 prose-img:rounded-lg prose-img:shadow-md prose-img:w-full prose-img:h-auto [&_h1]:text-slate-900 dark:[&_h1]:text-slate-100 [&_h2]:text-slate-900 dark:[&_h2]:text-slate-100 [&_h3]:text-slate-900 dark:[&_h3]:text-slate-100 [&_h4]:text-slate-900 dark:[&_h4]:text-slate-100 [&_h5]:text-slate-900 dark:[&_h5]:text-slate-100 [&_h6]:text-slate-900 dark:[&_h6]:text-slate-100 [&_*]:max-w-full [&_*]:overflow-hidden">
+                  <div 
+                    className="article-content"
+                    dangerouslySetInnerHTML={{ __html: article.content }} 
+                  />
                 </div>
               </div>
             </article>
