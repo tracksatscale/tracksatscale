@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
 
 export async function GET() {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://tracksatscale.vercel.app'
+  const baseUrl = 'https://tracksatscale.vercel.app'
   
   // Static pages
   const staticPages = [
