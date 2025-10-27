@@ -248,7 +248,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         </header>
         
         <main className="py-8">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
             <article className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
               <div className="p-8 sm:p-12">
                 <header className="mb-8">

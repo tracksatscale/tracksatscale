@@ -146,7 +146,17 @@ body {
   }
   
   .article-content .container {
-    @apply max-w-none mx-0 p-0 ml-72;
+    @apply max-w-4xl mx-auto p-0 ml-72;
+    min-height: calc(100vh - 8rem);
+  }
+  
+  /* Ensure proper centering for article content */
+  .article-content {
+    @apply text-center;
+  }
+  
+  .article-content .container {
+    @apply text-left;
   }
   
   .article-content .sidebar h3 {
@@ -501,7 +511,13 @@ body {
     }
     
     .article-content .container {
-      @apply ml-0;
+      @apply ml-0 max-w-4xl mx-auto;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .article-content .container {
+      @apply max-w-full mx-4;
     }
   }
   
