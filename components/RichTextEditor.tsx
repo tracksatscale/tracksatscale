@@ -19,7 +19,8 @@ import {
   Eye,
   EyeOff,
   Download,
-  Upload
+  Upload,
+  Wrench
 } from 'lucide-react'
 
 interface RichTextEditorProps {
@@ -83,7 +84,23 @@ export function RichTextEditor({ value, onChange, placeholder = 'Write your arti
     reader.onload = (e) => {
       const content = e.target?.result as string
       if (content) {
-        onChange(content)
+        // Automatically fix the HTML when uploading
+        let fixedContent = content
+        
+        // Remove DOCTYPE, html, head, body tags if present
+        fixedContent = fixedContent.replace(/<!DOCTYPE[^>]*>/gi, '')
+        fixedContent = fixedContent.replace(/<html[^>]*>/gi, '')
+        fixedContent = fixedContent.replace(/<\/html>/gi, '')
+        fixedContent = fixedContent.replace(/<head[^>]*>[\s\S]*?<\/head>/gi, '')
+        fixedContent = fixedContent.replace(/<body[^>]*>/gi, '')
+        fixedContent = fixedContent.replace(/<\/body>/gi, '')
+        
+        // Wrap content in article-content div if not already wrapped
+        if (!fixedContent.includes('class="article-content"') && !fixedContent.includes("class='article-content'")) {
+          fixedContent = `<div class="article-content">\n${fixedContent}\n</div>`
+        }
+        
+        onChange(fixedContent)
       }
     }
     reader.readAsText(file)
@@ -102,50 +119,59 @@ export function RichTextEditor({ value, onChange, placeholder = 'Write your arti
   }
 
   const insertCompleteHTML = () => {
-    const completeHTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Article Title</title>
-    <meta name="description" content="Your article description">
-    <style>
-        /* Your custom CSS styles here */
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.7;
-            color: #1f2937;
-            background-color: #ffffff;
-            font-size: 18px;
-        }
-        
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-        
-        h1, h2, h3, h4, h5, h6 {
-            color: #1f2937;
-            margin-bottom: 1rem;
-        }
-        
-        p {
-            margin-bottom: 1rem;
-        }
-        
-        /* Add more styles as needed */
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Your Article Title</h1>
-        <p>Start writing your article content here...</p>
-    </div>
-</body>
-</html>`
+    const completeHTML = `<div class="article-content">
+    <h1>Your Article Title</h1>
+    
+    <h2>Introduction</h2>
+    <p>Start writing your article content here. This template is optimized for the TrackScale blog layout.</p>
+    
+    <h2>Main Content</h2>
+    <p>Add your main content here. The article will automatically have proper spacing and styling.</p>
+    
+    <h3>Subheading</h3>
+    <p>You can add subheadings and content as needed.</p>
+    
+    <ul>
+        <li>Bullet point 1</li>
+        <li>Bullet point 2</li>
+        <li>Bullet point 3</li>
+    </ul>
+    
+    <h2>Conclusion</h2>
+    <p>Wrap up your article with a conclusion.</p>
+</div>`
     
     onChange(completeHTML)
+  }
+
+  const fixEmbeddedHTML = () => {
+    let fixedHTML = value
+    
+    // Remove DOCTYPE, html, head, body tags if present
+    fixedHTML = fixedHTML.replace(/<!DOCTYPE[^>]*>/gi, '')
+    fixedHTML = fixedHTML.replace(/<html[^>]*>/gi, '')
+    fixedHTML = fixedHTML.replace(/<\/html>/gi, '')
+    fixedHTML = fixedHTML.replace(/<head[^>]*>[\s\S]*?<\/head>/gi, '')
+    fixedHTML = fixedHTML.replace(/<body[^>]*>/gi, '')
+    fixedHTML = fixedHTML.replace(/<\/body>/gi, '')
+    
+    // Wrap content in article-content div if not already wrapped
+    if (!fixedHTML.includes('class="article-content"') && !fixedHTML.includes("class='article-content'")) {
+      fixedHTML = `<div class="article-content">\n${fixedHTML}\n</div>`
+    }
+    
+    // Fix any problematic layout CSS
+    fixedHTML = fixedHTML.replace(/\.container\s*{[^}]*display:\s*flex[^}]*}/gi, '')
+    fixedHTML = fixedHTML.replace(/\.container\s*{[^}]*}/gi, '')
+    fixedHTML = fixedHTML.replace(/\.sidebar\s*{[^}]*}/gi, '')
+    fixedHTML = fixedHTML.replace(/\.main-content\s*{[^}]*}/gi, '')
+    
+    // Remove any existing flexbox layout styles
+    fixedHTML = fixedHTML.replace(/display:\s*flex[^;]*;/gi, '')
+    fixedHTML = fixedHTML.replace(/flex-direction:\s*[^;]*;/gi, '')
+    fixedHTML = fixedHTML.replace(/flex:\s*[^;]*;/gi, '')
+    
+    onChange(fixedHTML)
   }
 
   const ToolbarButton = ({ 
@@ -180,6 +206,11 @@ export function RichTextEditor({ value, onChange, placeholder = 'Write your arti
           onClick={insertCompleteHTML}
           icon={FileText}
           title="Insert Complete HTML Template"
+        />
+        <ToolbarButton
+          onClick={fixEmbeddedHTML}
+          icon={Wrench}
+          title="Fix Layout Issues (Remove problematic CSS)"
         />
         <div className="w-px h-6 bg-slate-300 dark:bg-slate-600 mx-1" />
         
@@ -291,8 +322,11 @@ export function RichTextEditor({ value, onChange, placeholder = 'Write your arti
       
       {/* Help text */}
       <div className="px-4 py-2 bg-slate-50 dark:bg-slate-800 text-xs text-slate-500 dark:text-slate-400 border-t border-slate-200 dark:border-slate-700">
-        💡 <strong>Tip:</strong> You can paste your complete HTML content here, including DOCTYPE, head, body tags, and custom styles. 
-        Use the preview mode to see how your HTML will look when rendered. The editor will preserve all your HTML formatting and styling.
+        💡 <strong>Tips:</strong> 
+        <br />• Use "Insert Complete HTML Template" for new articles with proper layout
+        <br />• Use "Fix Layout Issues" if you paste HTML with layout problems (removes DOCTYPE, head, body tags and problematic CSS)
+        <br />• Use preview mode to see how your HTML will look when rendered
+        <br />• The editor automatically wraps content in the correct article-content div
       </div>
     </div>
   )
