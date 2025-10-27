@@ -167,7 +167,9 @@ body {
   }
   
   /* Article content styling - desktop first */
-  .article-content .sidebar {
+  .article-content .sidebar,
+  .article-content .toc,
+  .article-content .table-of-contents {
     @apply fixed left-0 top-20 w-64 h-[calc(100vh-5rem)] bg-slate-50 dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 p-6 overflow-y-auto z-40;
     display: block !important;
   }
@@ -176,13 +178,6 @@ body {
     @apply w-full p-8 ml-72 mr-8;
     min-height: calc(100vh - 8rem);
     max-width: calc(100vw - 20rem);
-  }
-  
-  .article-content .sidebar,
-  .article-content .toc,
-  .article-content .table-of-contents {
-    @apply fixed left-0 top-20 w-64 h-[calc(100vh-5rem)] bg-slate-50 dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 p-6 overflow-y-auto z-40;
-    display: block !important;
   }
   
   .article-content .sidebar h3 {
@@ -548,23 +543,11 @@ body {
       @apply w-full px-4 mx-0;
     }
     
-    /* Hide all sidebar elements on mobile */
+    /* Hide sidebar elements on mobile only */
     .article-content .sidebar,
     .article-content .toc,
-    .article-content .table-of-contents,
-    .article-content nav[class*="sidebar"],
-    .article-content div[class*="sidebar"],
-    .article-content aside,
-    .article-content .toc-container,
-    .article-content .table-of-contents-container {
+    .article-content .table-of-contents {
       display: none !important;
-      visibility: hidden !important;
-      opacity: 0 !important;
-      height: 0 !important;
-      width: 0 !important;
-      overflow: hidden !important;
-      position: absolute !important;
-      left: -9999px !important;
     }
     
     .article-content .container {
@@ -573,28 +556,6 @@ body {
       max-width: 100% !important;
       padding: 1rem !important;
       width: 100% !important;
-    }
-    
-    /* Force main content to be visible and properly positioned */
-    .article-content > *:not(.sidebar):not(.toc):not(.table-of-contents):not(nav):not(aside) {
-      display: block !important;
-      width: 100% !important;
-      position: static !important;
-      float: none !important;
-      margin-left: 0 !important;
-      margin-right: 0 !important;
-    }
-    
-    /* Ensure main content area is visible */
-    .article-content main,
-    .article-content .main-content,
-    .article-content .content,
-    .article-content .article-body {
-      display: block !important;
-      width: 100% !important;
-      margin-left: 0 !important;
-      margin-right: 0 !important;
-      padding: 0 !important;
     }
     
     .article-content .pros-cons-grid {
@@ -611,60 +572,6 @@ body {
     
     .article-content .meta-info {
       @apply flex-col items-start;
-    }
-    
-    /* Ensure all content elements are visible on mobile */
-    .article-content h1,
-    .article-content h2,
-    .article-content h3,
-    .article-content h4,
-    .article-content h5,
-    .article-content h6,
-    .article-content p,
-    .article-content ul,
-    .article-content ol,
-    .article-content li,
-    .article-content img,
-    .article-content table,
-    .article-content blockquote,
-    .article-content div:not(.sidebar):not(.toc):not(.table-of-contents) {
-      display: block !important;
-      width: 100% !important;
-      position: static !important;
-      float: none !important;
-    }
-    
-    /* Override any embedded styles that might hide content */
-    .article-content * {
-      max-width: 100% !important;
-      box-sizing: border-box !important;
-    }
-    
-    /* Specific overrides for common embedded HTML structures */
-    .article-content .wrapper,
-    .article-content .page-wrapper,
-    .article-content .content-wrapper {
-      display: block !important;
-      width: 100% !important;
-      margin: 0 !important;
-      padding: 0 !important;
-    }
-    
-    /* Force any hidden content to be visible */
-    .article-content .hidden,
-    .article-content [style*="display: none"],
-    .article-content [style*="visibility: hidden"] {
-      display: block !important;
-      visibility: visible !important;
-    }
-    
-    /* Ensure proper text flow */
-    .article-content p,
-    .article-content div,
-    .article-content section,
-    .article-content article {
-      clear: both !important;
-      float: none !important;
     }
   }
 }
