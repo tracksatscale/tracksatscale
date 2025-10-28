@@ -36,6 +36,68 @@ export function RichTextEditor({ value, onChange, placeholder = 'Write your arti
   const [isPreviewMode, setIsPreviewMode] = useState(false)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
+  // Comprehensive HTML cleaning function
+  const cleanHTML = (html: string): string => {
+    let cleaned = html
+
+    // Step 1: Remove DOCTYPE, html, head, body tags
+    cleaned = cleaned.replace(/<!DOCTYPE[^>]*>/gi, '')
+    cleaned = cleaned.replace(/<html[^>]*>/gi, '')
+    cleaned = cleaned.replace(/<\/html>/gi, '')
+    cleaned = cleaned.replace(/<head[^>]*>[\s\S]*?<\/head>/gi, '')
+    cleaned = cleaned.replace(/<body[^>]*>/gi, '')
+    cleaned = cleaned.replace(/<\/body>/gi, '')
+
+    // Step 2: Remove all <style> tags (they contain conflicting CSS)
+    cleaned = cleaned.replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '')
+
+    // Step 3: Remove all <script> tags (security)
+    cleaned = cleaned.replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')
+
+    // Step 4: Remove inline styles that might conflict
+    cleaned = cleaned.replace(/\s+style\s*=\s*["'][^"']*["']/gi, '')
+
+    // Step 5: Remove conflicting CSS classes
+    cleaned = cleaned.replace(/class\s*=\s*["']container["']/gi, '')
+    cleaned = cleaned.replace(/class\s*=\s*["']main-content["']/gi, '')
+
+    // Step 6: Wrap content in article-content div if not already wrapped
+    if (!cleaned.includes('class="article-content"') && !cleaned.includes("class='article-content'")) {
+      cleaned = `<div class="article-content">\n${cleaned}\n</div>`
+    }
+
+    return cleaned.trim()
+  }
+
+  // Handle paste event to automatically clean HTML
+  const handlePaste = (e: React.ClipboardEvent<HTMLTextAreaElement>) => {
+    const pastedText = e.clipboardData.getData('text/html')
+    if (pastedText) {
+      e.preventDefault()
+      
+      const textarea = textareaRef.current
+      if (!textarea) return
+
+      // Get current cursor position
+      const start = textarea.selectionStart
+      const end = textarea.selectionEnd
+      const selectedText = value.substring(start, end)
+      
+      // Clean the pasted HTML
+      const cleanedHTML = cleanHTML(pastedText)
+      
+      // Insert cleaned HTML
+      const newValue = value.substring(0, start) + cleanedHTML + value.substring(end)
+      onChange(newValue)
+      
+      // Set cursor position after inserted content
+      setTimeout(() => {
+        textarea.focus()
+        textarea.setSelectionRange(start + cleanedHTML.length, start + cleanedHTML.length)
+      }, 0)
+    }
+  }
+
   const execCommand = (command: string, value?: string) => {
     document.execCommand(command, false, value)
     textareaRef.current?.focus()
@@ -84,23 +146,9 @@ export function RichTextEditor({ value, onChange, placeholder = 'Write your arti
     reader.onload = (e) => {
       const content = e.target?.result as string
       if (content) {
-        // Automatically fix the HTML when uploading
-        let fixedContent = content
-        
-        // Remove DOCTYPE, html, head, body tags if present
-        fixedContent = fixedContent.replace(/<!DOCTYPE[^>]*>/gi, '')
-        fixedContent = fixedContent.replace(/<html[^>]*>/gi, '')
-        fixedContent = fixedContent.replace(/<\/html>/gi, '')
-        fixedContent = fixedContent.replace(/<head[^>]*>[\s\S]*?<\/head>/gi, '')
-        fixedContent = fixedContent.replace(/<body[^>]*>/gi, '')
-        fixedContent = fixedContent.replace(/<\/body>/gi, '')
-        
-        // Wrap content in article-content div if not already wrapped
-        if (!fixedContent.includes('class="article-content"') && !fixedContent.includes("class='article-content'")) {
-          fixedContent = `<div class="article-content">\n${fixedContent}\n</div>`
-        }
-        
-        onChange(fixedContent)
+        // Use the comprehensive cleanHTML function
+        const cleanedContent = cleanHTML(content)
+        onChange(cleanedContent)
       }
     }
     reader.readAsText(file)
@@ -145,33 +193,9 @@ export function RichTextEditor({ value, onChange, placeholder = 'Write your arti
   }
 
   const fixEmbeddedHTML = () => {
-    let fixedHTML = value
-    
-    // Remove DOCTYPE, html, head, body tags if present
-    fixedHTML = fixedHTML.replace(/<!DOCTYPE[^>]*>/gi, '')
-    fixedHTML = fixedHTML.replace(/<html[^>]*>/gi, '')
-    fixedHTML = fixedHTML.replace(/<\/html>/gi, '')
-    fixedHTML = fixedHTML.replace(/<head[^>]*>[\s\S]*?<\/head>/gi, '')
-    fixedHTML = fixedHTML.replace(/<body[^>]*>/gi, '')
-    fixedHTML = fixedHTML.replace(/<\/body>/gi, '')
-    
-    // Wrap content in article-content div if not already wrapped
-    if (!fixedHTML.includes('class="article-content"') && !fixedHTML.includes("class='article-content'")) {
-      fixedHTML = `<div class="article-content">\n${fixedHTML}\n</div>`
-    }
-    
-    // Fix any problematic layout CSS
-    fixedHTML = fixedHTML.replace(/\.container\s*{[^}]*display:\s*flex[^}]*}/gi, '')
-    fixedHTML = fixedHTML.replace(/\.container\s*{[^}]*}/gi, '')
-    fixedHTML = fixedHTML.replace(/\.sidebar\s*{[^}]*}/gi, '')
-    fixedHTML = fixedHTML.replace(/\.main-content\s*{[^}]*}/gi, '')
-    
-    // Remove any existing flexbox layout styles
-    fixedHTML = fixedHTML.replace(/display:\s*flex[^;]*;/gi, '')
-    fixedHTML = fixedHTML.replace(/flex-direction:\s*[^;]*;/gi, '')
-    fixedHTML = fixedHTML.replace(/flex:\s*[^;]*;/gi, '')
-    
-    onChange(fixedHTML)
+    // Use the comprehensive cleanHTML function
+    const cleanedHTML = cleanHTML(value)
+    onChange(cleanedHTML)
   }
 
   const ToolbarButton = ({ 
@@ -314,6 +338,7 @@ export function RichTextEditor({ value, onChange, placeholder = 'Write your arti
           ref={textareaRef}
           value={value}
           onChange={(e) => onChange(e.target.value)}
+          onPaste={handlePaste}
           placeholder={placeholder}
           className="w-full h-96 p-4 border-0 resize-none focus:outline-none bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 font-mono text-sm"
           style={{ minHeight: '350px' }}
@@ -322,11 +347,12 @@ export function RichTextEditor({ value, onChange, placeholder = 'Write your arti
       
       {/* Help text */}
       <div className="px-4 py-2 bg-slate-50 dark:bg-slate-800 text-xs text-slate-500 dark:text-slate-400 border-t border-slate-200 dark:border-slate-700">
-        💡 <strong>Tips:</strong> 
-        <br />• Use "Insert Complete HTML Template" for new articles with proper layout
-        <br />• Use "Fix Layout Issues" if you paste HTML with layout problems (removes DOCTYPE, head, body tags and problematic CSS)
-        <br />• Use preview mode to see how your HTML will look when rendered
-        <br />• The editor automatically wraps content in the correct article-content div
+        💡 <strong>Smart HTML Editor:</strong> 
+        <br />• <strong>Auto-clean on paste:</strong> Pasting any HTML automatically removes DOCTYPE, html, head, body tags, style tags, scripts, and conflicting CSS
+        <br />• <strong>Auto-wrap:</strong> Content is automatically wrapped in the correct article-content div for proper styling
+        <br />• <strong>Manual fix:</strong> Click "Fix Layout Issues" to re-clean existing HTML
+        <br />• <strong>Preview:</strong> Toggle preview mode to see how your HTML will look when rendered
+        <br />• <strong>Security:</strong> All scripts and dangerous code are automatically removed
       </div>
     </div>
   )
