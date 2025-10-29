@@ -157,9 +157,9 @@ body {
   .article-content .container,
   .article-content .content-container {
     display: flex !important;
-    max-width: 1200px !important;
+    max-width: 1400px !important;
     margin: 0 auto !important;
-    padding: 0 !important;
+    padding: 2rem !important;
     width: 100% !important;
   }
   
@@ -167,7 +167,8 @@ body {
     flex: 1 !important;
     padding: 2rem !important;
     margin-left: 18rem !important;
-    max-width: calc(100% - 20rem) !important;
+    max-width: 800px !important;
+    margin-right: auto !important;
   }
   
   .article-content .sidebar,
