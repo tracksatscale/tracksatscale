@@ -260,8 +260,22 @@ body {
     @apply mb-8;
   }
   
+  /* Don't override colors for header-section */
+  .article-content .header-section {
+    @apply mb-8;
+  }
+  
   .article-content h1 {
     @apply text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-slate-900 dark:text-slate-100 leading-tight;
+  }
+  
+  /* Force white text in header section */
+  .article-content .header-section,
+  .article-content .header-section h1,
+  .article-content .header-section p,
+  .article-content .header-section .meta-info,
+  .article-content .header-section .meta-item {
+    color: white !important;
   }
   
   .article-content h2 {
