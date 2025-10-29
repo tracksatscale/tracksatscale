@@ -48,18 +48,59 @@ export function RichTextEditor({ value, onChange, placeholder = 'Write your arti
     cleaned = cleaned.replace(/<body[^>]*>/gi, '')
     cleaned = cleaned.replace(/<\/body>/gi, '')
 
-    // Step 2: Remove all <style> tags (they contain conflicting CSS)
-    cleaned = cleaned.replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '')
+    // Step 2: Remove only layout-breaking CSS from <style> tags (keep colors, fonts, spacing)
+    // Remove layout properties that cause conflicts
+    cleaned = cleaned.replace(/<style[^>]*>([\s\S]*?)<\/style>/gi, (match, styleContent) => {
+      // Keep the style tag but remove problematic layout properties
+      let cleanContent = styleContent
+      
+      // Remove layout-breaking properties
+      cleanContent = cleanContent.replace(/display:\s*flex[^;]*;/gi, '')
+      cleanContent = cleanContent.replace(/flex-direction:\s*[^;]*;/gi, '')
+      cleanContent = cleanContent.replace(/flex:\s*[^;]*;/gi, '')
+      cleanContent = cleanContent.replace(/position:\s*sticky[^;]*;/gi, '')
+      cleanContent = cleanContent.replace(/position:\s*fixed[^;]*;/gi, '')
+      cleanContent = cleanContent.replace(/position:\s*absolute[^;]*;/gi, '')
+      cleanContent = cleanContent.replace(/align-self:\s*[^;]*;/gi, '')
+      cleanContent = cleanContent.replace(/\.container\s*{[^}]*display:\s*[^;]*[^}]*}/gi, '')
+      
+      // Remove specific class definitions that break layout
+      cleanContent = cleanContent.replace(/\.container\s*{[^}]*}/gi, (containerMatch) => {
+        // Only keep non-layout properties
+        if (!containerMatch.includes('display: flex') && 
+            !containerMatch.includes('position: sticky') && 
+            !containerMatch.includes('position: fixed')) {
+          return containerMatch
+        }
+        return ''
+      })
+      
+      return `<style>${cleanContent}</style>`
+    })
 
     // Step 3: Remove all <script> tags (security)
     cleaned = cleaned.replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')
 
-    // Step 4: Remove inline styles that might conflict
-    cleaned = cleaned.replace(/\s+style\s*=\s*["'][^"']*["']/gi, '')
+    // Step 4: Remove inline layout-breaking styles (keep safe ones)
+    cleaned = cleaned.replace(/\s+style\s*=\s*["']([^"']*)["']/gi, (match, styleAttr) => {
+      // Remove only layout properties from inline styles
+      const safeAttr = styleAttr
+        .replace(/display:\s*[^;]*;/gi, '')
+        .replace(/flex-direction:\s*[^;]*;/gi, '')
+        .replace(/flex:\s*[^;]*;/gi, '')
+        .replace(/position:\s*sticky[^;]*;/gi, '')
+        .replace(/position:\s*fixed[^;]*;/gi, '')
+        .replace(/position:\s*absolute[^;]*;/gi, '')
+        .replace(/;+/g, ';')
+        .replace(/^;+|;+$/g, '')
+      
+      return safeAttr ? ` style="${safeAttr}"` : ''
+    })
 
-    // Step 5: Remove conflicting CSS classes
-    cleaned = cleaned.replace(/class\s*=\s*["']container["']/gi, '')
-    cleaned = cleaned.replace(/class\s*=\s*["']main-content["']/gi, '')
+    // Step 5: Change class names to avoid conflicts
+    cleaned = cleaned.replace(/class\s*=\s*["']container["']/gi, 'class="content-container"')
+    cleaned = cleaned.replace(/class\s*=\s*["']sidebar["']/gi, 'class="article-sidebar"')
+    cleaned = cleaned.replace(/class\s*=\s*["']content["']/gi, 'class="article-content"')
 
     // Step 6: Wrap content in article-content div if not already wrapped
     if (!cleaned.includes('class="article-content"') && !cleaned.includes("class='article-content'")) {
