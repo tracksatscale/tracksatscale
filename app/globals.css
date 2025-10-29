@@ -271,8 +271,13 @@ body {
   
   /* Force white text in header section */
   .article-content .header-section,
+  .article-content .header-section *,
   .article-content .header-section h1,
+  .article-content .header-section h2,
+  .article-content .header-section h3,
   .article-content .header-section p,
+  .article-content .header-section div,
+  .article-content .header-section span,
   .article-content .header-section .meta-info,
   .article-content .header-section .meta-item {
     color: white !important;
