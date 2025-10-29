@@ -261,37 +261,60 @@ body {
     @apply text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-slate-900 dark:text-slate-100 leading-tight;
   }
   
-  /* Force white text in header section and any banner */
+  /* Force white text in header section and any banner - ALL ELEMENTS */
   .article-content .header-section,
-  .article-content .header-section * {
+  .article-content .header-section *,
+  .article-content .header-section h1,
+  .article-content .header-section h2,
+  .article-content .header-section h3,
+  .article-content .header-section h4,
+  .article-content .header-section p,
+  .article-content .header-section div,
+  .article-content .header-section span,
+  .article-content .header-section .meta-info,
+  .article-content .header-section .meta-item {
     color: white !important;
   }
   
-  /* Hide paragraph after h1 in header section */
+  /* Remove ALL paragraphs in header section except those in meta-info */
+  .article-content .header-section > p:not(.meta-info p),
+  .article-content .header-section p:not(.meta-info p) {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    opacity: 0 !important;
+  }
+  
+  /* Also hide h1 + p specifically */
   .article-content .header-section h1 + p {
     display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
   
   /* Keep meta-info visible */
   .article-content .header-section .meta-info {
     display: flex !important;
+    color: white !important;
   }
   
-  .article-content .header-section h1,
-  .article-content .header-section h2,
-  .article-content .header-section h3,
-  .article-content .header-section p,
-  .article-content .header-section div,
-  .article-content .header-section span,
-  .article-content .header-section .meta-info,
-  .article-content .header-section .meta-item,
   /* Force white text for any element with gradient background */
-  .article-content [style*="gradient"],
-  .article-content [style*="background: linear-gradient"],
-  .article-content [style*="background:linear-gradient"],
   .article-content [style*="gradient"] *,
   .article-content [style*="background: linear-gradient"] *,
-  .article-content [style*="background:linear-gradient"] * {
+  .article-content [style*="background:linear-gradient"] *,
+  .article-content [style*="background-image: linear-gradient"] * {
+    color: white !important;
+  }
+  
+  /* Force white text in visual-card elements (banners) */
+  .article-content .visual-card,
+  .article-content .visual-card *,
+  .article-content .visual-card h4,
+  .article-content .visual-card p {
     color: white !important;
   }
   
