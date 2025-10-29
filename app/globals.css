@@ -153,27 +153,28 @@ body {
     max-width: none !important;
   }
   
-  /* Override embedded HTML layout structure */
-  .article-content .container {
+  /* Completely override embedded HTML layout structure */
+  .article-content .container,
+  .article-content .content-container {
     display: block !important;
     flex-direction: column !important;
     max-width: none !important;
     margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
   }
   
   .article-content .main-content {
-    flex: none !important;
+    display: block !important;
+    width: 100% !important;
     padding: 0 !important;
+    margin: 0 !important;
+    flex: none !important;
     max-width: none !important;
   }
   
-  /* Override embedded HTML's flexbox layout */
-  .article-content .container {
-    display: block !important;
-    flex-direction: column !important;
-  }
-  
-  .article-content .sidebar {
+  .article-content .sidebar,
+  .article-content .article-sidebar {
     position: fixed !important;
     left: 0 !important;
     top: 5rem !important;
@@ -184,17 +185,20 @@ body {
     padding: 1.5rem !important;
     overflow-y: auto !important;
     z-index: 40 !important;
+    display: block !important;
   }
   
   .article-content .main-content {
     display: block !important;
-    width: 100% !important;
+    width: calc(100% - 18rem) !important;
     margin-left: 18rem !important;
     padding: 2rem !important;
+    margin-right: 2rem !important;
   }
   
   /* Ensure proper stacking order */
   .article-content .sidebar,
+  .article-content .article-sidebar,
   .article-content .toc,
   .article-content .table-of-contents {
     z-index: 40;
@@ -206,13 +210,12 @@ body {
     z-index: 10;
   }
   
-  /* Article content styling - desktop first */
-  .article-content .sidebar,
+  /* Additional sidebar styling for TOC elements */
   .article-content .toc,
   .article-content .table-of-contents {
-    @apply fixed left-0 top-20 w-64 h-[calc(100vh-5rem)] bg-slate-50 dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 p-6 overflow-y-auto z-40;
-    display: block !important;
     position: fixed !important;
+    left: 0 !important;
+    top: 5rem !important;
     width: 16rem !important;
     height: calc(100vh - 5rem) !important;
     background: #f8fafc !important;
@@ -220,40 +223,36 @@ body {
     padding: 1.5rem !important;
     overflow-y: auto !important;
     z-index: 40 !important;
-  }
-  
-  .article-content .container {
-    @apply w-full p-8 ml-72 mr-8;
-    min-height: calc(100vh - 8rem);
-    max-width: calc(100vw - 20rem);
     display: block !important;
-    margin-left: 18rem !important;
-    margin-right: 2rem !important;
-    padding: 2rem !important;
-    width: calc(100% - 20rem) !important;
   }
   
-  .article-content .sidebar h3 {
+  .article-content .sidebar h3,
+  .article-content .article-sidebar h3 {
     @apply text-sm font-bold mb-4 text-slate-900 dark:text-slate-100 uppercase tracking-wide;
   }
   
-  .article-content .sidebar ul {
+  .article-content .sidebar ul,
+  .article-content .article-sidebar ul {
     @apply list-none;
   }
   
-  .article-content .sidebar ul li {
+  .article-content .sidebar ul li,
+  .article-content .article-sidebar ul li {
     @apply mb-2;
   }
   
-  .article-content .sidebar ul li a {
+  .article-content .sidebar ul li a,
+  .article-content .article-sidebar ul li a {
     @apply text-sm text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors block py-1;
   }
   
-  .article-content .sidebar ul li a.active {
+  .article-content .sidebar ul li a.active,
+  .article-content .article-sidebar ul li a.active {
     @apply text-blue-600 dark:text-blue-400 font-semibold;
   }
   
-  .article-content .sidebar ul ul {
+  .article-content .sidebar ul ul,
+  .article-content .article-sidebar ul ul {
     @apply ml-4 mt-2;
   }
   
@@ -598,6 +597,7 @@ body {
     
     /* Hide sidebar elements on mobile only */
     .article-content .sidebar,
+    .article-content .article-sidebar,
     .article-content .toc,
     .article-content .table-of-contents {
       display: none !important;
@@ -610,7 +610,8 @@ body {
       left: -9999px !important;
     }
     
-    .article-content .container {
+    .article-content .container,
+    .article-content .content-container {
       display: block !important;
       margin-left: 0 !important;
       margin-right: 0 !important;
