@@ -65,7 +65,7 @@ export function RichTextEditor({ value, onChange, placeholder = 'Write your arti
       cleanContent = cleanContent.replace(/\.container\s*{[^}]*display:\s*[^;]*[^}]*}/gi, '')
       
       // Remove specific class definitions that break layout
-      cleanContent = cleanContent.replace(/\.container\s*{[^}]*}/gi, (containerMatch) => {
+      cleanContent = cleanContent.replace(/\.container\s*{[^}]*}/gi, (containerMatch: string) => {
         // Only keep non-layout properties
         if (!containerMatch.includes('display: flex') && 
             !containerMatch.includes('position: sticky') && 
@@ -82,7 +82,7 @@ export function RichTextEditor({ value, onChange, placeholder = 'Write your arti
     cleaned = cleaned.replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')
 
     // Step 4: Remove inline layout-breaking styles (keep safe ones)
-    cleaned = cleaned.replace(/\s+style\s*=\s*["']([^"']*)["']/gi, (match, styleAttr) => {
+    cleaned = cleaned.replace(/\s+style\s*=\s*["']([^"']*)["']/gi, (match: string, styleAttr: string) => {
       // Remove only layout properties from inline styles
       const safeAttr = styleAttr
         .replace(/display:\s*[^;]*;/gi, '')
