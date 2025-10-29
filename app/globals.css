@@ -276,10 +276,11 @@ body {
     color: white !important;
   }
   
-  /* Hide the white banner (meta-info bar) inside header-section */
+  /* Make meta-info transparent (keep content, hide white background) */
   .article-content .header-section .meta-info {
-    display: none !important;
-    visibility: hidden !important;
+    background: transparent !important;
+    border: none !important;
+    padding: 0.5rem 0 !important;
   }
   
   /* Force white text for any element with gradient background */
