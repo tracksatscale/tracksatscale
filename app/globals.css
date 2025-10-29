@@ -177,14 +177,14 @@ body {
   .article-content .article-sidebar {
     position: fixed !important;
     left: 0 !important;
-    top: 5rem !important;
+    top: 6rem !important;
     width: 16rem !important;
-    height: calc(100vh - 5rem) !important;
+    height: calc(100vh - 6rem) !important;
     background: #f8fafc !important;
     border-right: 1px solid #e2e8f0 !important;
     padding: 1.5rem !important;
     overflow-y: auto !important;
-    z-index: 10 !important;
+    z-index: 5 !important;
     display: block !important;
   }
   
@@ -271,7 +271,10 @@ body {
   
   /* Force white text in header section and any banner */
   .article-content .header-section,
-  .article-content .header-section *,
+  .article-content .header-section * {
+    color: white !important;
+  }
+  
   .article-content .header-section h1,
   .article-content .header-section h2,
   .article-content .header-section h3,
@@ -283,7 +286,10 @@ body {
   /* Force white text for any element with gradient background */
   .article-content [style*="gradient"],
   .article-content [style*="background: linear-gradient"],
-  .article-content [style*="background:linear-gradient"] {
+  .article-content [style*="background:linear-gradient"],
+  .article-content [style*="gradient"] *,
+  .article-content [style*="background: linear-gradient"] *,
+  .article-content [style*="background:linear-gradient"] * {
     color: white !important;
   }
   
