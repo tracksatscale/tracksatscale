@@ -48,32 +48,12 @@ export function RichTextEditor({ value, onChange, placeholder = 'Write your arti
     cleaned = cleaned.replace(/<body[^>]*>/gi, '')
     cleaned = cleaned.replace(/<\/body>/gi, '')
 
-    // Step 2: Remove only layout-breaking CSS from <style> tags (keep colors, fonts, spacing)
-    // Remove layout properties that cause conflicts
-    cleaned = cleaned.replace(/<style[^>]*>([\s\S]*?)<\/style>/gi, (match, styleContent) => {
-      // Keep the style tag but remove problematic layout properties
+    // Step 2: Remove ONLY layout-breaking CSS properties from style tags (keep everything else)
+    cleaned = cleaned.replace(/<style[^>]*>([\s\S]*?)<\/style>/gi, (match: string, styleContent: string) => {
       let cleanContent = styleContent
       
-      // Remove layout-breaking properties
-      cleanContent = cleanContent.replace(/display:\s*flex[^;]*;/gi, '')
-      cleanContent = cleanContent.replace(/flex-direction:\s*[^;]*;/gi, '')
-      cleanContent = cleanContent.replace(/flex:\s*[^;]*;/gi, '')
-      cleanContent = cleanContent.replace(/position:\s*sticky[^;]*;/gi, '')
-      cleanContent = cleanContent.replace(/position:\s*fixed[^;]*;/gi, '')
-      cleanContent = cleanContent.replace(/position:\s*absolute[^;]*;/gi, '')
-      cleanContent = cleanContent.replace(/align-self:\s*[^;]*;/gi, '')
-      cleanContent = cleanContent.replace(/\.container\s*{[^}]*display:\s*[^;]*[^}]*}/gi, '')
-      
-      // Remove specific class definitions that break layout
-      cleanContent = cleanContent.replace(/\.container\s*{[^}]*}/gi, (containerMatch: string) => {
-        // Only keep non-layout properties
-        if (!containerMatch.includes('display: flex') && 
-            !containerMatch.includes('position: sticky') && 
-            !containerMatch.includes('position: fixed')) {
-          return containerMatch
-        }
-        return ''
-      })
+      // Remove ONLY the layout-breaking properties that cause desktop/mobile conflicts
+      cleanContent = cleanContent.replace(/\.container\s*{[^}]*display:\s*flex[^}]*}/gi, '')
       
       return `<style>${cleanContent}</style>`
     })
@@ -85,24 +65,16 @@ export function RichTextEditor({ value, onChange, placeholder = 'Write your arti
     cleaned = cleaned.replace(/\s+style\s*=\s*["']([^"']*)["']/gi, (match: string, styleAttr: string) => {
       // Remove only layout properties from inline styles
       const safeAttr = styleAttr
-        .replace(/display:\s*[^;]*;/gi, '')
+        .replace(/display:\s*flex[^;]*;/gi, '')
         .replace(/flex-direction:\s*[^;]*;/gi, '')
         .replace(/flex:\s*[^;]*;/gi, '')
-        .replace(/position:\s*sticky[^;]*;/gi, '')
-        .replace(/position:\s*fixed[^;]*;/gi, '')
-        .replace(/position:\s*absolute[^;]*;/gi, '')
         .replace(/;+/g, ';')
         .replace(/^;+|;+$/g, '')
       
       return safeAttr ? ` style="${safeAttr}"` : ''
     })
 
-    // Step 5: Change class names to avoid conflicts
-    cleaned = cleaned.replace(/class\s*=\s*["']container["']/gi, 'class="content-container"')
-    cleaned = cleaned.replace(/class\s*=\s*["']sidebar["']/gi, 'class="article-sidebar"')
-    cleaned = cleaned.replace(/class\s*=\s*["']content["']/gi, 'class="article-content"')
-
-    // Step 6: Wrap content in article-content div if not already wrapped
+    // Step 5: Wrap content in article-content div if not already wrapped
     if (!cleaned.includes('class="article-content"') && !cleaned.includes("class='article-content'")) {
       cleaned = `<div class="article-content">\n${cleaned}\n</div>`
     }
