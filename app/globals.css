@@ -184,7 +184,7 @@ body {
     border-right: 1px solid #e2e8f0 !important;
     padding: 1.5rem !important;
     overflow-y: auto !important;
-    z-index: 40 !important;
+    z-index: 10 !important;
     display: block !important;
   }
   
@@ -201,7 +201,7 @@ body {
   .article-content .article-sidebar,
   .article-content .toc,
   .article-content .table-of-contents {
-    z-index: 40;
+    z-index: 10;
   }
   
   .article-content .container,
@@ -269,7 +269,7 @@ body {
     @apply text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-slate-900 dark:text-slate-100 leading-tight;
   }
   
-  /* Force white text in header section */
+  /* Force white text in header section and any banner */
   .article-content .header-section,
   .article-content .header-section *,
   .article-content .header-section h1,
@@ -279,7 +279,11 @@ body {
   .article-content .header-section div,
   .article-content .header-section span,
   .article-content .header-section .meta-info,
-  .article-content .header-section .meta-item {
+  .article-content .header-section .meta-item,
+  /* Force white text for any element with gradient background */
+  .article-content [style*="gradient"],
+  .article-content [style*="background: linear-gradient"],
+  .article-content [style*="background:linear-gradient"] {
     color: white !important;
   }
   
