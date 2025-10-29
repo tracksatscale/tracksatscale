@@ -276,30 +276,10 @@ body {
     color: white !important;
   }
   
-  /* Remove ALL paragraphs in header section except those in meta-info */
-  .article-content .header-section > p:not(.meta-info p),
-  .article-content .header-section p:not(.meta-info p) {
-    display: none !important;
-    visibility: hidden !important;
-    height: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    opacity: 0 !important;
-  }
-  
-  /* Also hide h1 + p specifically */
-  .article-content .header-section h1 + p {
-    display: none !important;
-    visibility: hidden !important;
-    height: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-  
-  /* Keep meta-info visible */
+  /* Hide the white banner (meta-info bar) inside header-section */
   .article-content .header-section .meta-info {
-    display: flex !important;
-    color: white !important;
+    display: none !important;
+    visibility: hidden !important;
   }
   
   /* Force white text for any element with gradient background */
