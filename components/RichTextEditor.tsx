@@ -176,9 +176,33 @@ export function RichTextEditor({ value, onChange, placeholder = 'Write your arti
   }
 
   const fixEmbeddedHTML = () => {
-    // Use the comprehensive cleanHTML function
-    const cleanedHTML = cleanHTML(value)
-    onChange(cleanedHTML)
+    let fixedHTML = value
+    
+    // Remove DOCTYPE, html, head, body tags if present
+    fixedHTML = fixedHTML.replace(/<!DOCTYPE[^>]*>/gi, '')
+    fixedHTML = fixedHTML.replace(/<html[^>]*>/gi, '')
+    fixedHTML = fixedHTML.replace(/<\/html>/gi, '')
+    fixedHTML = fixedHTML.replace(/<head[^>]*>[\s\S]*?<\/head>/gi, '')
+    fixedHTML = fixedHTML.replace(/<body[^>]*>/gi, '')
+    fixedHTML = fixedHTML.replace(/<\/body>/gi, '')
+    
+    // Wrap content in article-content div if not already wrapped
+    if (!fixedHTML.includes('class="article-content"') && !fixedHTML.includes("class='article-content'")) {
+      fixedHTML = `<div class="article-content">\n${fixedHTML}\n</div>`
+    }
+    
+    // Fix any problematic layout CSS
+    fixedHTML = fixedHTML.replace(/\.container\s*{[^}]*display:\s*flex[^}]*}/gi, '')
+    fixedHTML = fixedHTML.replace(/\.container\s*{[^}]*}/gi, '')
+    fixedHTML = fixedHTML.replace(/\.sidebar\s*{[^}]*}/gi, '')
+    fixedHTML = fixedHTML.replace(/\.main-content\s*{[^}]*}/gi, '')
+    
+    // Remove any existing flexbox layout styles
+    fixedHTML = fixedHTML.replace(/display:\s*flex[^;]*;/gi, '')
+    fixedHTML = fixedHTML.replace(/flex-direction:\s*[^;]*;/gi, '')
+    fixedHTML = fixedHTML.replace(/flex:\s*[^;]*;/gi, '')
+    
+    onChange(fixedHTML)
   }
 
   const ToolbarButton = ({ 
