@@ -204,6 +204,16 @@ body {
     display: block !important;
   }
   
+  /* Force sidebar visibility */
+  .article-content .sidebar,
+  .article-content .article-sidebar,
+  .article-content .toc,
+  .article-content .table-of-contents {
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+  
   /* Dark mode sidebar */
   @media (prefers-color-scheme: dark) {
     .article-content .sidebar,
@@ -704,8 +714,20 @@ body {
     }
   }
   
+  /* Desktop - ensure sidebar is visible */
+  @media (min-width: 1025px) {
+    .article-content .sidebar,
+    .article-content .article-sidebar,
+    .article-content .toc,
+    .article-content .table-of-contents {
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+    }
+  }
+  
   /* Mobile responsive adjustments */
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     .article-content {
       @apply w-full px-4 mx-0;
     }
