@@ -94,8 +94,24 @@ body {
     @apply space-y-2 mb-4;
   }
   
+  .prose ul {
+    list-style-type: disc !important;
+    list-style-position: outside !important;
+    padding-left: 1.5rem !important;
+    overflow: visible !important;
+  }
+  
+  .prose ol {
+    list-style-type: decimal !important;
+    list-style-position: outside !important;
+    padding-left: 1.5rem !important;
+    overflow: visible !important;
+  }
+  
   .prose li {
     @apply leading-relaxed mb-1;
+    display: list-item !important;
+    overflow: visible !important;
   }
   
   .prose img {
@@ -332,8 +348,67 @@ body {
     @apply mb-4 ml-6;
   }
   
+  .article-content ul {
+    list-style-type: disc !important;
+    list-style-position: outside !important;
+    padding-left: 1.5rem !important;
+    overflow: visible !important;
+  }
+  
+  .article-content ol {
+    list-style-type: decimal !important;
+    list-style-position: outside !important;
+    padding-left: 1.5rem !important;
+    overflow: visible !important;
+  }
+  
   .article-content li {
     @apply mb-2 leading-relaxed;
+    display: list-item !important;
+    overflow: visible !important;
+  }
+  
+  /* Ensure nested lists also show bullets */
+  .article-content ul ul {
+    list-style-type: circle !important;
+  }
+  
+  .article-content ul ul ul {
+    list-style-type: square !important;
+  }
+  
+  /* Override any embedded HTML styles that remove list markers */
+  .article-content .container ul,
+  .article-content .main-content ul,
+  .article-content .content ul,
+  .article-content section ul,
+  .article-content article ul,
+  .article-content div ul {
+    list-style-type: disc !important;
+    list-style-position: outside !important;
+    padding-left: 1.5rem !important;
+    margin-left: 1.5rem !important;
+  }
+  
+  .article-content .container ol,
+  .article-content .main-content ol,
+  .article-content .content ol,
+  .article-content section ol,
+  .article-content article ol,
+  .article-content div ol {
+    list-style-type: decimal !important;
+    list-style-position: outside !important;
+    padding-left: 1.5rem !important;
+    margin-left: 1.5rem !important;
+  }
+  
+  .article-content .container li,
+  .article-content .main-content li,
+  .article-content .content li,
+  .article-content section li,
+  .article-content article li,
+  .article-content div li {
+    display: list-item !important;
   }
   
   .article-content img {
