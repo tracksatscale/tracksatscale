@@ -197,11 +197,12 @@ body {
     width: 16rem !important;
     height: calc(100vh - 5rem) !important;
     background: #f8fafc !important;
-    border-right: 1px solid #e2e8f0 !important;
+    border-right: 3px solid #3b82f6 !important;
     padding: 1.5rem !important;
     overflow-y: auto !important;
     z-index: 40 !important;
     display: block !important;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1) !important;
   }
   
   /* Force sidebar visibility */
@@ -222,6 +223,16 @@ body {
     .article-content .table-of-contents {
       background: #1e293b !important;
       border-right: 1px solid #334155 !important;
+    }
+    
+    .article-content .sidebar h3,
+    .article-content .article-sidebar h3 {
+      color: #f1f5f9 !important;
+    }
+    
+    .article-content .sidebar ul li a,
+    .article-content .article-sidebar ul li a {
+      color: #94a3b8 !important;
     }
   }
   
@@ -252,21 +263,34 @@ body {
   .article-content .sidebar h3,
   .article-content .article-sidebar h3 {
     @apply text-sm font-bold mb-4 text-slate-900 dark:text-slate-100 uppercase tracking-wide;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
   }
   
   .article-content .sidebar ul,
   .article-content .article-sidebar ul {
     @apply list-none;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
   }
   
   .article-content .sidebar ul li,
   .article-content .article-sidebar ul li {
     @apply mb-2;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
   }
   
   .article-content .sidebar ul li a,
   .article-content .article-sidebar ul li a {
     @apply text-sm text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors block py-1;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: #475569 !important;
   }
   
   .article-content .sidebar ul li a.active,
