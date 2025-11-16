@@ -9,6 +9,9 @@ interface ArticlePageProps {
   }>
 }
 
+// Prevent dynamic route generation during build
+export const dynamicParams = false
+
 export async function generateStaticParams() {
   // Check if Supabase is configured
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL === 'https://placeholder.supabase.co') {
