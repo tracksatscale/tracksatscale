@@ -9,8 +9,8 @@ interface ArticlePageProps {
   }>
 }
 
-// Prevent dynamic route generation during build
-export const dynamicParams = false
+// Allow dynamic route generation for new articles
+export const dynamicParams = true
 
 export async function generateStaticParams() {
   // Check if Supabase is configured
