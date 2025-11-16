@@ -21,9 +21,16 @@ export async function generateStaticParams() {
       .select('slug')
       .eq('status', 'published')
 
-    return articles?.map((article: any) => ({
-      slug: article.slug,
-    })) || []
+    // Filter out any slugs that might conflict with reserved paths
+    const reservedPaths = ['about', 'contact', 'privacy', 'terms', 'admin', 'articles', 'preview']
+    return articles
+      ?.filter((article: any) => {
+        const slug = article?.slug
+        return slug && typeof slug === 'string' && slug.trim() !== '' && !reservedPaths.includes(slug)
+      })
+      .map((article: any) => ({
+        slug: article.slug,
+      })) || []
   } catch (error) {
     console.error('Error generating static params:', error)
     return []
@@ -32,6 +39,14 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: ArticlePageProps) {
   const { slug } = await params
+  
+  // Reject reserved paths
+  const reservedPaths = ['', 'about', 'contact', 'privacy', 'terms', 'admin', 'articles', 'preview']
+  if (!slug || reservedPaths.includes(slug)) {
+    return {
+      title: 'Article Not Found',
+    }
+  }
   
   // Check if Supabase is configured
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL === 'https://placeholder.supabase.co') {
@@ -103,6 +118,12 @@ export async function generateMetadata({ params }: ArticlePageProps) {
 
 export default async function ArticlePage({ params }: ArticlePageProps) {
   const { slug } = await params
+  
+  // Reject reserved paths that should not be handled by this route
+  const reservedPaths = ['', 'about', 'contact', 'privacy', 'terms', 'admin', 'articles', 'preview']
+  if (!slug || reservedPaths.includes(slug)) {
+    notFound()
+  }
   
   // Check if Supabase is configured
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL === 'https://placeholder.supabase.co') {
