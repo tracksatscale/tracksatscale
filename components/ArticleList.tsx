@@ -175,8 +175,11 @@ export function ArticleList() {
                             </div>
                             
                             <h2 className="text-xl font-bold leading-tight text-slate-900 dark:text-slate-100 mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                              <Link href={`/${article.slug}`}>
-                                <span className="absolute inset-0" />
+                              <Link 
+                                href={`/articles/${article.slug}`}
+                                className="block"
+                                scroll={true}
+                              >
                                 {article.title}
                               </Link>
                             </h2>
@@ -202,8 +205,9 @@ export function ArticleList() {
                             {/* Read More Link */}
                             <div className="flex items-center">
                               <Link
-                                href={`/${article.slug}`}
+                                href={`/articles/${article.slug}`}
                                 className="inline-flex items-center text-sm font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
+                                scroll={true}
                               >
                                 Read more
                                 <svg className="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
