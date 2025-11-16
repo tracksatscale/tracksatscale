@@ -9,31 +9,66 @@ interface ArticlePageProps {
   }>
 }
 
-export async function generateStaticParams() {
-  const { data: articles } = await supabase
-    .from('articles')
-    .select('slug')
-    .eq('status', 'published')
+// Prevent dynamic route generation during build
+export const dynamicParams = false
 
-  return articles?.map((article: any) => ({
-    slug: article.slug,
-  })) || []
+export async function generateStaticParams() {
+  // Check if Supabase is configured
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL === 'https://placeholder.supabase.co') {
+    return []
+  }
+
+  try {
+    const { data: articles } = await supabase
+      .from('articles')
+      .select('slug')
+      .eq('status', 'published')
+
+    // Filter out invalid slugs
+    return articles
+      ?.filter((article: any) => {
+        const slug = article?.slug
+        return slug && typeof slug === 'string' && slug.trim() !== ''
+      })
+      .map((article: any) => ({
+        slug: article.slug,
+      })) || []
+  } catch (error) {
+    console.error('Error generating static params:', error)
+    return []
+  }
 }
 
 export async function generateMetadata({ params }: ArticlePageProps) {
   const { slug } = await params
-  const { data: article } = await supabase
-    .from('articles')
-    .select('*')
-    .eq('slug', slug)
-    .eq('status', 'published')
-    .single()
-
-  if (!article) {
+  
+  // Reject empty or invalid slugs
+  if (!slug || typeof slug !== 'string' || slug.trim() === '') {
     return {
       title: 'Article Not Found',
     }
   }
+  
+  // Check if Supabase is configured
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL === 'https://placeholder.supabase.co') {
+    return {
+      title: 'Article Not Found',
+    }
+  }
+
+  try {
+    const { data: article } = await supabase
+      .from('articles')
+      .select('*')
+      .eq('slug', slug)
+      .eq('status', 'published')
+      .single()
+
+    if (!article) {
+      return {
+        title: 'Article Not Found',
+      }
+    }
 
   // Clean HTML tags from content for description
   const cleanContent = article.content.replace(/<[^>]*>/g, '').substring(0, 160)
@@ -60,20 +95,38 @@ export async function generateMetadata({ params }: ArticlePageProps) {
       canonical: `/articles/${article.slug}`,
     },
   }
+  } catch (error) {
+    console.error('Error generating metadata:', error)
+    return {
+      title: 'Article Not Found',
+    }
+  }
 }
 
 export default async function ArticlePage({ params }: ArticlePageProps) {
   const { slug } = await params
-  const { data: article } = await supabase
-    .from('articles')
-    .select('*')
-    .eq('slug', slug)
-    .eq('status', 'published')
-    .single()
-
-  if (!article) {
+  
+  // Reject empty or invalid slugs
+  if (!slug || typeof slug !== 'string' || slug.trim() === '') {
     notFound()
   }
+  
+  // Check if Supabase is configured
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL === 'https://placeholder.supabase.co') {
+    notFound()
+  }
+
+  try {
+    const { data: article } = await supabase
+      .from('articles')
+      .select('*')
+      .eq('slug', slug)
+      .eq('status', 'published')
+      .single()
+
+    if (!article) {
+      notFound()
+    }
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -205,5 +258,9 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
       </main>
     </div>
   )
+  } catch (error) {
+    console.error('Error fetching article:', error)
+    notFound()
+  }
 }
 
